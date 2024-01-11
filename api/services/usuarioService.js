@@ -33,8 +33,8 @@ class UsuarioService {
     return usuarios;
   }
 
-  async buscaPorId(dto) {
-    const id = dto.id;
+  async buscaPorId(id) {
+
     const usuario = await database.usuarios.findOne({
       where: {
         id: id,
@@ -47,14 +47,32 @@ class UsuarioService {
     }
   }
   async editarUsuario(dto) {
-    const usuario = await this.buscaPorId(dto.id)
+    const { id } = dto.id
+
+    console.log(id)
+
+    const usuario = await this.buscaPorId(id);
+
     try {
-        usuario.nome = dto.nome
-        usuario.email = dto.email
-        await usuario.save()
-        return usuario
+      usuario.nome = dto.nome;
+      usuario.email = dto.email;
+      await usuario.save();
+      return usuario;
     } catch (error) {
-        throw new Error('Erro ao editar usuario!')
+      throw new Error("Erro ao editar usuario!");
+    }
+  }
+  async deletarUsuario(id) {
+    console.log("Entrou no serviceDelete ID: ", id)
+    await this.buscaPorId(id)
+    try {
+        await database.usuarios.destroy({
+            where: {
+                id: id
+            }
+        })
+    } catch (error) {
+        throw new Error('Erro ao tentar deletar o usuario!')
     }
 }
 }
