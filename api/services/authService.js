@@ -31,6 +31,7 @@ class AuthService {
         expiresIn: 86400
       }
     )
+    return { accessToken }
   }
 }
 
