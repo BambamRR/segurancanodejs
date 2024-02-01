@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
       roles.belongsToMany(models.usuarios, {
         through: models.usuarios_roles,
         as: 'roles_do_usuario',

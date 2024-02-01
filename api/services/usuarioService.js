@@ -28,6 +28,7 @@ class UsuarioService {
       throw new Error("Erro ao cadastrar usuário");
     }
   }
+  
   async buscarTodosUsuarios() {
     const usuarios = await database.usuarios.findAll();
     return usuarios;
