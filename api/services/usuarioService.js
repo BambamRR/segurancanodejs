@@ -28,14 +28,34 @@ class UsuarioService {
       throw new Error("Erro ao cadastrar usuário");
     }
   }
-  
+
   async buscarTodosUsuarios() {
-    const usuarios = await database.usuarios.findAll();
+    const usuarios = await database.usuarios.findAll({
+      include: [
+        {
+          model: database.permissoes,
+          as: "usuario_permissoes",
+          attributes: ["id", "nome"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+      include: [
+        {
+          model: database.roles,
+          as: "usuario_roles",
+          attributes: ["id", "nome"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
     return usuarios;
   }
 
   async buscaPorId(id) {
-
     const usuario = await database.usuarios.findOne({
       where: {
         id: id,
@@ -48,9 +68,9 @@ class UsuarioService {
     }
   }
   async editarUsuario(dto) {
-    const { id } = dto.id
+    const { id } = dto.id;
 
-    console.log(id)
+    console.log(id);
 
     const usuario = await this.buscaPorId(id);
 
@@ -64,18 +84,18 @@ class UsuarioService {
     }
   }
   async deletarUsuario(id) {
-    console.log("Entrou no serviceDelete ID: ", id)
-    await this.buscaPorId(id)
+    console.log("Entrou no serviceDelete ID: ", id);
+    await this.buscaPorId(id);
     try {
-        await database.usuarios.destroy({
-            where: {
-                id: id
-            }
-        })
+      await database.usuarios.destroy({
+        where: {
+          id: id,
+        },
+      });
     } catch (error) {
-        throw new Error('Erro ao tentar deletar o usuario!')
+      throw new Error("Erro ao tentar deletar o usuario!");
     }
-}
+  }
 }
 
 module.exports = UsuarioService;

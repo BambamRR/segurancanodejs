@@ -5,6 +5,7 @@ const SegurancaController = require('../controllers/segurancaController')
 
 router
     .post('/seguranca/acl', SegurancaController.cadastrarAcl)
+    .post('/seguranca/permissoes-roles', SegurancaController.cadastrarPermissoesRoles)
 
 
 

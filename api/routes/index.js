@@ -3,9 +3,9 @@ const bodyParser = require('body-parser')
 const produto = require('./produtoRoute')
 const usuario = require('./usuariosRoute')
 const auth = require('./authRoutes')
-const role = require('./role')
-const permissao = require('./permissao')
-const seguranca  = require('./seguranca')
+const role = require('./roleRoute')
+const permissao = require('./permissaoRoute')
+const seguranca  = require('./segurancaRoute')
 
 module.exports = app => {
   app.use(
